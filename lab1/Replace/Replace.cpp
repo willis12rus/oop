@@ -1,6 +1,3 @@
-// Replace.cpp : Defines the entry point for the console application.
-//
-
 #include <stdio.h>
 #include <tchar.h>
 #include <iostream>
@@ -14,7 +11,7 @@ int main(int argc, char** argv)
 {
 	if (argc != 5)
 	{
-		std::cout << "Invalid argument count\n"
+		cout << "Invalid argument count\n"
 				  << "Usage: replace.exe <inputFile> <outputFile> <searchString> <replacementString>\n";
 		return 1;
 	}
@@ -25,8 +22,8 @@ int main(int argc, char** argv)
 	ofstream outputFile;
 	outputFile.open(argv[2]);
 	if ((inputFile.is_open()) and (outputFile.is_open())){
-		string search = argv[3];
-		string replace = argv[4];
+		string searchString = argv[3];
+		string replaceString = argv[4];
 		string line;
 		while (getline(inputFile, line))
 		{
@@ -34,12 +31,12 @@ int main(int argc, char** argv)
 			string result;
 			while (pos < line.length())
 			{
-				size_t foundPos = line.find(search, pos);
+				size_t foundPos = line.find(searchString, pos);
 				result.append(line, pos, foundPos - pos);
 				if (foundPos != string::npos) 
 				{
-					result.append(replace);
-					pos = foundPos + search.length();
+					result.append(replaceString);
+					pos = foundPos + searchString.length();
 				}
 				else
 				{
@@ -48,7 +45,9 @@ int main(int argc, char** argv)
 			}
 			outputFile << result << "\n";
 		}
-		outputFile.flush();
+		if (!outputFile.flush()){
+			cout << "Error with writing in output file: please check buffer\n";
+		}
 	} else {
 		cout << "Can''t find input/output file\n"
 				  << "Please, enter correct file names\n";
