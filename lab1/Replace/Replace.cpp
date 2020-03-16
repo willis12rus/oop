@@ -7,7 +7,51 @@
 
 using namespace std;
 
-int main(int argc, char** argv)
+string ReplaceString(const string& subject,	const string& searchString, const string& replacementString)
+{
+	if (searchString == replacementString)
+	{
+		return replacementString;
+	}
+	size_t pos = 0;
+	string result;
+	while (pos < subject.length())
+	{
+		size_t foundPos = subject.find(searchString, pos);
+		result.append(subject, pos, foundPos - pos);
+		if (foundPos != string::npos) 
+		{
+			result.append(replacementString);
+			pos = foundPos + searchString.length();
+		}
+		else
+		{
+			break;
+		}
+	}
+	return result;
+}
+
+void CopyTextWithReplace(ifstream& input, ofstream& output, const string& searchString, const string& replaceString)
+{
+	if (!input.is_open() || !output.is_open()){
+		cout << "Can't find input/output file\n"
+			 << "Please, enter correct file names\n";
+		return;
+	}
+	if (searchString.empty())
+	{
+		return;
+	}
+	string line;
+	while (getline(input, line))
+	{
+		output << ReplaceString(line, searchString, replaceString) << "\n";
+	}
+
+}
+
+int main(int argc, char* argv[])
 {
 	if (argc != 5)
 	{
@@ -16,43 +60,19 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	ifstream inputFile;
-	inputFile.open(argv[1]);
+	ifstream FileIn;
+	FileIn.open(argv[1]);
 
-	ofstream outputFile;
-	outputFile.open(argv[2]);
-	if ((inputFile.is_open()) and (outputFile.is_open())){
-		string searchString = argv[3];
-		string replaceString = argv[4];
-		string line;
-		while (getline(inputFile, line))
-		{
-			size_t pos = 0;
-			string result;
-			while (pos < line.length())
-			{
-				size_t foundPos = line.find(searchString, pos);
-				result.append(line, pos, foundPos - pos);
-				if (foundPos != string::npos) 
-				{
-					result.append(replaceString);
-					pos = foundPos + searchString.length();
-				}
-				else
-				{
-					break;
-				}	
-			}
-			outputFile << result << "\n";
-		}
-		if (!outputFile.flush()){
-			cout << "Error with writing in output file: please check buffer\n";
-		}
-	} else {
-		cout << "Can''t find input/output file\n"
-				  << "Please, enter correct file names\n";
-		return 1;
+	ofstream FileOut;
+	FileOut.open(argv[2]);
+	
+	string search = argv[3];
+	string replace = argv[4];
+	CopyTextWithReplace(FileIn, FileOut, search, replace);
+	if (!FileOut.flush())
+	{
+		cout << "Error with writing in output file: please check buffer\n";
 	}
-
+	
 	return 0;
 }
