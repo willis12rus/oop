@@ -21,7 +21,10 @@ string ReplaceString(const string& subject, const string& searchString, const st
 		result.append(subject, pos, foundPos - pos);
 		if (foundPos != string::npos) 
 		{
-			result.append(replacementString);
+			if (!replacementString.empty())
+			{
+				result.append(replacementString);
+			}
 			pos = foundPos + searchString.length();
 		}
 		else
