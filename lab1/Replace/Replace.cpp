@@ -7,7 +7,7 @@
 
 using namespace std;
 
-string ReplaceString(const string& subject,	const string& searchString, const string& replacementString)
+string ReplaceString(const string& subject, const string& searchString, const string& replacementString)
 {
 	if (searchString == replacementString)
 	{
@@ -34,11 +34,6 @@ string ReplaceString(const string& subject,	const string& searchString, const st
 
 void CopyTextWithReplace(ifstream& input, ofstream& output, const string& searchString, const string& replaceString)
 {
-	if (!input.is_open() || !output.is_open()){
-		cout << "Can't find input/output file\n"
-			 << "Please, enter correct file names\n";
-		return;
-	}
 	if (searchString.empty())
 	{
 		return;
@@ -48,7 +43,6 @@ void CopyTextWithReplace(ifstream& input, ofstream& output, const string& search
 	{
 		output << ReplaceString(line, searchString, replaceString) << "\n";
 	}
-
 }
 
 int main(int argc, char* argv[])
@@ -60,16 +54,22 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	ifstream FileIn;
-	FileIn.open(argv[1]);
+	ifstream fileIn;
+	fileIn.open(argv[1]);
 
-	ofstream FileOut;
-	FileOut.open(argv[2]);
+	ofstream fileOut;
+	fileOut.open(argv[2]);
+	
+	if (!fileIn.is_open() || !fileOut.is_open()){
+		cout << "Can't find input/output file\n"
+			 << "Please, enter correct file names\n";
+		return 1;
+	}
 	
 	string search = argv[3];
 	string replace = argv[4];
-	CopyTextWithReplace(FileIn, FileOut, search, replace);
-	if (!FileOut.flush())
+	CopyTextWithReplace(fileIn, fileOut, search, replace);
+	if (!fileOut.flush())
 	{
 		cout << "Error with writing in output file: please check buffer\n";
 	}
