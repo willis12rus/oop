@@ -32,7 +32,7 @@ string ReplaceString(const string& subject, const string& searchString, const st
 	return result;
 }
 
-void CopyTextWithReplace(ifstream& input, ofstream& output, const string& searchString, const string& replaceString)
+void CopyTextWithReplace(istream& input, ostream& output, const string& searchString, const string& replaceString)
 {
 	if (searchString.empty())
 	{
@@ -72,6 +72,7 @@ int main(int argc, char* argv[])
 	if (!fileOut.flush())
 	{
 		cout << "Error with writing in output file: please check buffer\n";
+		return 1;
 	}
 	
 	return 0;
