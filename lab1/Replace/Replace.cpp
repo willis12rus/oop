@@ -9,7 +9,7 @@ using namespace std;
 
 string ReplaceString(const string& subject, const string& searchString, const string& replacementString)
 {
-	if (searchString == replacementString)
+	if ((searchString == replacementString) || (searchString.empty()))
 	{
 		return replacementString;
 	}
@@ -35,25 +35,42 @@ string ReplaceString(const string& subject, const string& searchString, const st
 	return result;
 }
 
-void CopyTextWithReplace(istream& input, ostream& output, const string& searchString, const string& replaceString)
+int CopyTextWithReplace(char* input, char* output, char* search, char* replace)
 {
-	string line;
-	while (getline(input, line))
-	{
-		output << ReplaceString(line, searchString, replaceString) << "\n";
-	}
-}
-
-int OpenFiles(char* input, char* output, ifstream& fileIn, ofstream& fileOut)
-{
+	ifstream fileIn;
+	ofstream fileOut;
 	fileIn.open(input);
 	fileOut.open(output);
 	
-	if (!fileIn.is_open() || !fileOut.is_open()){
-		cout << "Can't find input/output file\n"
-			 << "Please, enter correct file names\n";
+	if (!fileIn.is_open()){
+		cout << "Can't find input file\n"
+			 << "Please, enter correct file name\n";
 		return 1;
 	}  
+	
+	if (!fileOut.is_open()){
+		cout << "Can't find output file\n"
+			 << "Please, enter correct file name\n";
+		return 1;
+	}  
+	
+	string searchString = search;
+	string replaceString = replace;
+	string line;
+	while (getline(fileIn, line))
+	{
+		fileOut << ReplaceString(line, searchString, replaceString) << "\n";
+	}
+	if (fileIn.bad())
+	{
+		cout << "Error with reading input file\n";
+		return 1;
+	}
+	if (!fileOut.flush())
+	{
+		cout << "Error with writing in output file: please check buffer\n";
+		return 1;
+	}
 }
 
 int main(int argc, char* argv[])
@@ -64,18 +81,6 @@ int main(int argc, char* argv[])
 				  << "Usage: replace.exe <inputFile> <outputFile> <searchString> <replacementString>\n";
 		return 1;
 	}
-
-	ifstream inputFile;
-	ofstream outputFile;
-	OpenFiles(argv[1], argv[2], inputFile, outputFile);
-	string search = argv[3];
-	string replace = argv[4];
-	CopyTextWithReplace(inputFile, outputFile, search, replace);
-	if (!outputFile.flush())
-	{
-		cout << "Error with writing in output file: please check buffer\n";
-		return 1;
-	}
-	
+	CopyTextWithReplace(argv[1], argv[2], argv[3], argv[4]);
 	return 0;
 }
