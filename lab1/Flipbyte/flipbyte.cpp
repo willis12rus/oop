@@ -1,4 +1,6 @@
-include <stdio.h>
+﻿
+
+#include <stdio.h>
 #include <tchar.h>
 #include <iostream>
 #include <fstream>
@@ -7,65 +9,56 @@ include <stdio.h>
 
 using namespace std;
 
-string ReplaceString(const string& subject,	const string& searchString, const string& replacementString)
+unsigned char ReverseByte(unsigned char number)
 {
-	if (searchString == replacementString)
-	{
-		return replacementString;
-	}
-	size_t pos = 0;
-	string result;
-	while (pos < subject.length())
-	{
-		size_t foundPos = subject.find(searchString, pos);
-		result.append(subject, pos, foundPos - pos);
-		if (foundPos != string::npos) 
-		{
-			result.append(replacementString);
-			pos = foundPos + searchString.length();
-		}
-		else
-		{
-			break;
-		}
-	}
-	return result;
+    unsigned char revNum = 0;
+    for (int i = 0; i < 8; i++) {
+        revNum <<= 1;
+        revNum |= number & 1;
+        number >>= 1;
+    }
+    return revNum;
 }
 
-void CopyTextWithReplace(ifstream& input, ofstream& output, const string& searchString, const string& replaceString)
+int FlipByte(char* numberGiven)
 {
-	if (!input.is_open() || !output.is_open()){
-		cout << "Can't find input/output file\n"
-			 << "Please, enter correct file names\n";
-		return;
-	}
-	if (searchString.empty())
-	{
-		return;
-	}
-	string line;
-	while (getline(input, line))
-	{
-		output << ReplaceString(line, searchString, replaceString) << "\n";
-	}
+	unsigned char inputByte;
+    int num;
+	string number = numberGiven;
+    try
+    {
+        num = stoi(number);
+    }
+    catch (const exception& err)
+    {
+        cout << err.what() << endl;
+        return 1;
+    }
+
+    if ((num < 0) || (num > 255))
+    {
+        cout << "Invalid argument. Range of numbers: 0 - 255" << endl;
+        return 1;
+    }
+	inputByte = static_cast<unsigned int>(num);
+
+	cout << static_cast<int>(ReverseByte(inputByte)) << endl;
+	return 0;
 
 }
+
 
 int main(int argc, char* argv[])
 {
 	if (argc != 2)
 	{
 		cout << "Invalid argument count\n"
-				  << "Usage: flipbyte.exe <input byte>\n";
+			<< "Usage: flipbyte.exe <input byte>\n";
 		return 1;
 	}
-	
-							
-	CopyTextWithReplace(FileIn, FileOut, search, replace);
-	if (!FileOut.flush())
-	{
-		cout << "Error with writing in output file: please check buffer\n";
-	}
-	
+
+
+	FlipByte(argv[1]);
 	return 0;
 }
+
