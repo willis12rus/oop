@@ -4,7 +4,6 @@
 tests\CMakeFiles\VectorTests.dir\VectorLabTests.cpp.obj: D:\oop\catch2\catch.hpp
 tests\CMakeFiles\VectorTests.dir\VectorLabTests.cpp.obj: ..\src\VectorFunctions.h
 tests\CMakeFiles\VectorTests.dir\VectorLabTests.cpp.obj: ..\tests\VectorLabTests.cpp
-tests\CMakeFiles\VectorTests.dir\VectorLabTests.cpp.obj: ..\tests\catch_runner.h
 
 tests\CMakeFiles\VectorTests.dir\__\src\VectorFunctions.cpp.obj: ..\src\VectorFunctions.cpp
 tests\CMakeFiles\VectorTests.dir\__\src\VectorFunctions.cpp.obj: ..\src\VectorFunctions.h

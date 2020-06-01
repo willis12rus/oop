@@ -143,9 +143,6 @@
 		<Unit filename="D:/oop/lab2/Vector/tests/VectorLabTests.cpp">
 			<Option target="VectorTests"/>
 		</Unit>
-		<Unit filename="D:/oop/lab2/Vector/tests/catch_runner.h">
-			<Option target="VectorTests"/>
-		</Unit>
 		<Unit filename="D:/oop/lab2/Vector/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

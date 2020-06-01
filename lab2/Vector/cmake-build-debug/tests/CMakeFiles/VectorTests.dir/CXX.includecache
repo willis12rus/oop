@@ -601,10 +601,6 @@ vector
 -
 ../src/VectorFunctions.h
 D:/oop/lab2/Vector/src/VectorFunctions.h
-catch_runner.h
-D:/oop/lab2/Vector/tests/catch_runner.h
-
-D:/oop/lab2/Vector/tests/catch_runner.h
 ../../../catch2/catch.hpp
 D:/oop/catch2/catch.hpp
 

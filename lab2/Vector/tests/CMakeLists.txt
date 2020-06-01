@@ -3,4 +3,4 @@ project(Vector)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(VectorTests VectorLabTests.cpp catch_runner.h ../src/VectorFunctions.cpp)
+add_executable(VectorTests VectorLabTests.cpp ../src/VectorFunctions.cpp)

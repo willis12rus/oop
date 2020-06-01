@@ -2,7 +2,8 @@
 #include <sstream>
 #include <vector>
 #include "../src/VectorFunctions.h"
-#include "catch_runner.h"
+#define CATCH_CONFIG_MAIN
+#include "../../../catch2/catch.hpp"
 
 using namespace std;
 
