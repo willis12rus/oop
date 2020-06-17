@@ -3,4 +3,4 @@ project(HTMLDecode)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(HTMLDecode main.cpp HTMLDecodeFunction.cpp HTMLDecodeFunction.h ReplaceCodeFromLab1.cpp ReplaceCodeFromLab1.h)
+add_executable(HTMLDecode main.cpp HTMLDecodeFunction.cpp HTMLDecodeFunction.h)
